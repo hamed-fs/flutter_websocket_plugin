@@ -40,18 +40,19 @@ class WebsocketManager {
     print(result);
   }
 
+  Future<dynamic> _methodCallHandler(MethodCall call) async {
+    switch (call.method) {
+      case 'listen/message':
+        _onMessage();
+        break;
+      case 'listen/close':
+        _onClose();
+        break;
+    }
+  }
+
   Future<void> _create() async {
-    _channel.setMethodCallHandler((MethodCall call) {
-      switch (call.method) {
-        case 'listen/message':
-          _onMessage();
-          break;
-        case 'listen/close':
-          _onClose();
-          break;
-      }
-      return;
-    } as Future<dynamic> Function(MethodCall)?);
+    _channel.setMethodCallHandler(_methodCallHandler);
     // print(url);
     // print(header);
     await _channel
