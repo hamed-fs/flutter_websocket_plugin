@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
   final TextEditingController _urlController =
       TextEditingController(text: 'wss://echo.websocket.org');
   final TextEditingController _messageController = TextEditingController();
-  WebsocketManager socket;
+  WebsocketManager? socket;
   String _message = '';
   String _closeMessage = '';
 
@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
                   child: Text('CONNECT'),
                   onPressed: () {
                     if (socket != null) {
-                      socket.connect();
+                      socket!.connect();
                     }
                   },
                 ),
@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
                   child: Text('CLOSE'),
                   onPressed: () {
                     if (socket != null) {
-                      socket.close();
+                      socket!.close();
                     }
                   },
                 ),
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
                   child: Text('LISTEN MESSAGE'),
                   onPressed: () {
                     if (socket != null) {
-                      socket.onMessage((dynamic message) {
+                      socket!.onMessage((dynamic message) {
                         print('New message: $message');
                         setState(() {
                           _message = message.toString();
@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
                   child: Text('LISTEN DONE'),
                   onPressed: () {
                     if (socket != null) {
-                      socket.onClose((dynamic message) {
+                      socket!.onClose((dynamic message) {
                         print('Close message: $message');
                         setState(() {
                           _closeMessage = message.toString();
@@ -96,7 +96,7 @@ class _MyAppState extends State<MyApp> {
                   icon: Icon(Icons.send),
                   onPressed: () {
                     if (socket != null) {
-                      socket.send(_messageController.text);
+                      socket!.send(_messageController.text);
                     }
                   },
                 ),
